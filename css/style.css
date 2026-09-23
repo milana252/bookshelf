@@ -1,0 +1,746 @@
+/* ============================================================
+   Bookshelf — style.css (maxеты ЛР2: палитра, сетка, экраны)
+   ============================================================ */
+
+/* ---------- Базовый сброс (CSS-reset) ---------- */
+*,
+*::before,
+*::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { -webkit-text-size-adjust: 100%; line-height: 1.5; }
+
+body {
+  font-family: "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif;
+  font-size: 1rem;                /* 16px — относительная база */
+  color: #16213e;
+  background: #F4EBD8;
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+img, svg { display: block; max-width: 100%; height: auto; }
+a { color: inherit; text-decoration: none; }
+button, input { font: inherit; color: inherit; }
+button { cursor: pointer; border: 0; background: none; }
+ul { list-style: none; }
+h1, h2, h3 { line-height: 1.2; }
+[hidden] { display: none !important; }
+
+/* ---------- Дизайн-токены ---------- */
+:root {
+  --primary: #2563EB;      /* основной синий */
+  --primary-strong: #1E40AF;
+  --cream: #F4EBD8;        /* фон */
+  --teal: #0D9488;         /* прогресс */
+  --amber: #F59E0B;        /* баннер / рейтинг */
+  --ink: #16213e;
+  --muted: #64748B;
+  --card: #ffffff;
+  --radius: 1.25rem;
+  --shadow: 0 0.25rem 1rem rgba(22, 33, 62, 0.08);
+}
+
+.icon { width: 1.2em; height: 1.2em; fill: none; stroke: currentColor; stroke-width: 1.8;
+        stroke-linecap: round; stroke-linejoin: round; display: inline-block; }
+.avatar {
+  border-radius: 50%; background: var(--primary); color: #fff;
+  display: flex; align-items: center; justify-content: center; font-weight: 700;
+}
+.avatar--sm { width: 2rem; height: 2rem; font-size: 0.9rem; }
+.profile__card .avatar { margin: 0 auto 0.75rem; width: 9rem; height: 9rem; font-size: 3.6rem; }
+.avatar--lg { width: 3rem; height: 3rem; font-size: 1.35rem; margin: 0 auto 0.5rem; }
+
+/* ============================================================
+   МОБИЛЬНЫЙ БЛОК (Mobile First, база ≤480px — без медиа-запросов)
+   ============================================================ */
+
+/* ---------- Верхняя панель ---------- */
+.topbar {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 1rem 1rem 0.25rem;
+}
+.brand { display: flex; align-items: center; gap: 0.55rem; font-weight: 800; }
+.brand__logo { width: 2rem; height: 2rem; border-radius: 0.55rem; }
+.brand__name { font-size: 1.1rem; }
+.topbar__right { display: flex; align-items: center; }
+.topbar__title { display: none; font-weight: 800; font-size: 1.05rem; }
+.topbar__search { display: none; }
+.topbar__name { display: none; }
+/* на экране книги — заголовок «Книга» с кнопкой назад */
+body.screen-book .topbar .brand { display: none; }
+body.screen-book .topbar { justify-content: flex-start; }
+body.screen-book .topbar__title { display: block; margin: 0 auto; cursor: pointer; }
+body.screen-auth .topbar, body.screen-book .topbar__right { display: none; }
+
+main { padding: 0 1rem 5.5rem; }
+
+.card {
+  background: var(--card); border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+/* ---------- Кнопки и формы ---------- */
+.btn {
+  display: block; width: 100%; text-align: center;
+  padding: 0.85rem 1rem; border-radius: 0.8rem; font-weight: 700;
+}
+.btn--primary { background: var(--primary); color: #fff; }
+.btn--primary:active { background: var(--primary-strong); }
+.btn--ghost { border: 1px solid #d9dced; background: #fff; color: var(--ink); }
+.btn--logout { color: #b91c1c; }
+.divider {
+  display: flex; align-items: center; gap: 0.75rem; margin: 1rem 0;
+  color: #94a3b8; font-size: 0.85rem;
+}
+.divider::before, .divider::after { content: ""; flex: 1; height: 1px; background: #e2e8f0; }
+.form__label { display: block; font-size: 0.9rem; margin: 1rem 0 0.3rem; font-weight: 600; color: #334155; }
+.form__input {
+  width: 100%; padding: 0.8rem 1rem;
+  border: 1px solid #e9e0cd; border-radius: 0.8rem; background: #fff; color: #1e293b;
+}
+.form__input:focus { outline: 2px solid var(--primary); }
+.form__input::placeholder { color: #757575; }
+.form__error { color: #b91c1c; font-size: 0.85rem; margin: 0.6rem 0 0; display: flex; gap: 0.35rem; }
+.form__forgot { display: block; text-align: right; color: #1d4ed8; font-size: 0.85rem; margin: 0.75rem 0 1rem; }
+
+/* ---------- Экран входа ---------- */
+.auth__hero { position: relative; }
+.auth__top { text-align: center; padding-top: 7.4rem; }
+.auth__book {
+  width: 6.5rem; height: 6.5rem; border-radius: 1.4rem;
+  margin: 0 auto 1.35rem;
+  box-shadow: 0 0.6rem 1.6rem rgba(37, 99, 235, 0.35);
+}
+.auth__brand { display: flex; align-items: center; justify-content: center; gap: 0.7rem; }
+.auth__wordmark { font-size: 1.85rem; font-weight: 800; color: var(--ink); }
+.pro-badge {
+  font-size: 0.7rem; font-weight: 800; color: #f59e0b;
+  border: 1px solid #f59e0b; border-radius: 0.4rem; padding: 0.15rem 0.45rem;
+}
+.auth__slogan {
+  font-size: 1.2rem; font-weight: 700; line-height: 1.35;
+  color: #4a5b7a; max-width: none; margin: 2.2rem auto 0;
+}
+.slogan-d { display: none; }
+.auth__sub { display: none; }
+.auth__band {
+  margin: 1.7rem 2.4rem 0;
+  background: linear-gradient(160deg, #4c80ee, #2563eb 45%, #2e7bc6);
+  border-radius: 1.5rem; padding: 2.2rem 1.9rem 2.6rem 2.4rem;
+  min-height: 21rem;
+}
+.auth__mob { text-align: left; }
+.auth__stat {
+  display: inline-block; font-size: 0.95rem; font-weight: 800;
+  color: #235de6; background: #bfdbfe;
+  padding: 0.55rem 1.3rem; border-radius: 999px;
+}
+.auth__stat .stat-d { display: none; }
+.auth__stats { display: none; }
+.auth__features { margin: 1.25rem 0 0; max-width: 19rem; text-align: left; }
+.auth__features li {
+  display: flex; gap: 0.6rem; align-items: flex-start;
+  font-size: 1.2rem; line-height: 1.5; font-weight: 600;
+  color: #fff; margin-bottom: 1.4rem;
+}
+.auth__features li::before {
+  content: ""; width: 0.55rem; height: 0.55rem; border-radius: 50%;
+  background: #fff; margin-top: 0.6rem; flex: 0 0 auto;
+}
+.auth__card { padding: 3rem 1.6rem 2.8rem; margin: 3.7rem 0 1.5rem; }
+.auth__card-title { font-size: 1.55rem; font-weight: 800; margin-bottom: 1.4rem; color: var(--ink); }
+.auth__head-d { display: none; }
+.auth__legal { display: none; }
+.auth__card .form__label { margin: 1.5rem 0 2.2rem; font-size: 1rem; }
+.auth__card .form__input { padding: 1.7rem 1.2rem; font-size: 1.3rem; line-height: 1.3; }
+.auth__card .form__forgot { font-size: 0.95rem; margin: 3.4rem 0 2rem; }
+.auth__card .btn { padding: 1rem; font-size: 1.35rem; }
+.auth__card .divider { margin: 3rem 0 3rem; }
+
+/* ---------- Каталог ---------- */
+.greeting { padding: 0.5rem 0 0.75rem; }
+.greeting__hi { font-size: 0.95rem; color: var(--muted); }
+.greeting br { display: none; }
+.greeting { font-size: 1.4rem; font-weight: 800; }
+
+.searchbar {
+  display: flex; align-items: center; gap: 0.6rem;
+  background: var(--card); border-radius: 999px; padding: 0 1rem;
+  box-shadow: var(--shadow); color: var(--muted);
+  margin: 0.8rem 0;
+}
+.searchbar__input { flex: 1; padding: 0.85rem 0; border: 0; background: none; font-size: 0.95rem; }
+.searchbar__input:focus { outline: 0; }
+
+.chips { display: flex; gap: 0.5rem; overflow-x: auto; padding: 0.75rem 0.05rem 0.25rem; scrollbar-width: none; }
+.chips::-webkit-scrollbar { display: none; }
+.chip {
+  flex: 0 0 auto; padding: 0.5rem 1.05rem;
+  background: var(--card); color: var(--muted);
+  border-radius: 999px; font-size: 0.9rem; font-weight: 600;
+  box-shadow: var(--shadow);
+}
+.chip--active { background: var(--primary); color: #fff; }
+
+/* ---------- Баннер «Дайджест недели» ---------- */
+.banner {
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  margin: 1rem 0; padding: 1.25rem 1.25rem;
+  border-radius: var(--radius);
+  background: linear-gradient(115deg, #1E4FAE, #2461E4 55%, #1F63CD);
+  color: #fff; box-shadow: 0 0.5rem 1.4rem rgba(31, 79, 174, 0.32);
+}
+.banner__tag { font-size: 0.8rem; font-weight: 700; opacity: 0.92; text-transform: uppercase; letter-spacing: 0.04em; }
+.banner__big { display: block; font-size: 1.35rem; font-weight: 800; line-height: 1.2; margin-top: 0.35rem; }
+.banner__sub {
+  display: inline-block; font-size: 0.85rem; font-weight: 800; margin-top: 0.5rem;
+  padding: 0.2rem 0.6rem; border-radius: 999px; background: rgba(255, 255, 255, 0.22);
+}
+.banner__note { display: block; font-size: 0.8rem; opacity: 0.92; margin-top: 0.55rem; }
+.banner__big .bb-d { display: none; }
+.banner__note .bn-d { display: none; }
+.banner__cta {
+  display: inline-block; font-size: 0.8rem; font-weight: 800; margin-top: 0.55rem;
+  padding: 0.3rem 0.75rem; border-radius: 999px; background: rgba(255, 255, 255, 0.25);
+}
+.banner__arrow { width: 1.6rem; height: 1.6rem; flex: 0 0 auto; }
+
+/* ---------- Продолжить чтение ---------- */
+.reading { display: flex; gap: 0.9rem; align-items: center; padding: 0.75rem; margin-bottom: 1.75rem; }
+.reading .cover { display: none; }
+.reading__body { flex: 1; min-width: 0; }
+.reading__head { display: flex; justify-content: space-between; font-size: 0.85rem; }
+.reading__pct { color: var(--teal); font-weight: 800; }
+.reading__title { font-weight: 800; margin-top: 0.15rem; }
+.reading__meta { font-size: 0.8rem; color: var(--muted); }
+.reading__meta.rm-d { display: none; }
+.progress { height: 0.5rem; background: #e2e8f0; border-radius: 999px; overflow: hidden; margin-top: 0.5rem; }
+.progress__fill { display: block; height: 100%; background: var(--teal); border-radius: 999px; }
+
+/* ---------- Секции и заголовки ---------- */
+.sect { display: flex; justify-content: space-between; align-items: baseline; margin: 1.5rem 0 0.75rem; }
+.sect__title { font-size: 1.05rem; font-weight: 800; }
+.sect__more { font-size: 0.85rem; color: var(--primary); font-weight: 700; }
+
+.track { display: flex; gap: 0.85rem; overflow-x: auto; padding-bottom: 0.4rem; scrollbar-width: none; }
+.track::-webkit-scrollbar { display: none; }
+
+/* ---------- Карточка книги ---------- */
+.book-card { width: 7.5rem; flex: 0 0 auto; cursor: pointer; text-align: left; }
+.book-card--grid { width: 100%; }
+.book-card--ext { display: none; }
+.cover {
+  position: relative; aspect-ratio: 2 / 3; border-radius: 0.7rem;
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding: 0.6rem; color: #fff; overflow: hidden;
+  box-shadow: 0 0.3rem 0.8rem rgba(37, 99, 235, 0.18);
+}
+.cover__initial {
+  position: absolute; top: 0.4rem; left: 0.6rem;
+  font-size: 2.3rem; font-weight: 800; opacity: 0.9; line-height: 1;
+}
+.cover__title { font-size: 0.85rem; font-weight: 700; line-height: 1.25; }
+.cover__author { font-size: 0.7rem; opacity: 0.85; }
+.book-card__title {
+  font-size: 0.85rem; font-weight: 600; margin-top: 0.4rem;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+.book-card__meta { font-size: 0.75rem; color: var(--muted); }
+.book-card__author { font-size: 0.75rem; color: var(--muted); }
+.book-card__genre { font-size: 0.7rem; font-weight: 600; color: var(--primary); }
+.reading .cover { width: 4rem; flex: 0 0 auto; }
+.now .cover { width: 2.8rem; flex: 0 0 auto; }
+.now .cover { display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 0.3rem; background: linear-gradient(160deg, #fbf8f0, #efe9d8); color: #1e293b; box-shadow: inset 0 0 0 1px rgba(30, 41, 59, 0.05), 0 0.4rem 0.9rem rgba(22, 33, 62, 0.09); }
+.now .cover .cover__title { color: #334155; font-size: 0.55rem; font-weight: 700; line-height: 1.2; text-align: center; }
+.now .cover .cover__author { color: #64748b; font-size: 0.5rem; margin-top: 0.1rem; text-align: center; }
+.now .cover .cover__initial { position: absolute; top: 0.3rem; left: 0.3rem; display: flex; align-items: center; justify-content: center; width: 1rem; height: 1rem; border-radius: 50%; background: #fff; color: #1e293b; font-size: 0.5rem; font-weight: 800; box-shadow: 0 1px 3px rgba(22, 33, 62, 0.32); line-height: 1; }
+
+/* ---------- Мобильная карточка «Читаю сейчас» — крупная ---------- */
+#nowCard { padding: 1.4rem; cursor: pointer; }
+#nowCard .cover { width: 7rem; flex: 0 0 auto; }
+#nowCard .cover .cover__title { font-size: 1rem; }
+#nowCard .cover .cover__author { font-size: 0.9rem; }
+#nowCard .cover .cover__initial { width: 1.6rem; height: 1.6rem; font-size: 0.85rem; }
+#nowCard .now__body b { font-size: 1.05rem; }
+#nowCard .now__title { font-size: 1.15rem; display: flex; flex-direction: column; align-items: flex-start; gap: 0.25rem; }
+#nowCard .now__pct { font-size: 1.05rem; }
+#nowCard .now__meta { font-size: 0.9rem; }
+
+/* ---------- Цвета обложек ---------- */
+.cover--blue  { background: linear-gradient(140deg, #2563EB, #1E40AF); }
+.cover--teal  { background: linear-gradient(140deg, #0D9488, #0F766E); }
+.cover--amber { background: linear-gradient(140deg, #F59E0B, #D97706); }
+.cover--rose  { background: linear-gradient(140deg, #DB2777, #9D174D); }
+.cover--violet{ background: linear-gradient(140deg, #7C3AED, #5B21B6); }
+.cover--slate { background: linear-gradient(140deg, #475569, #1E293B); }
+.cover--sky   { background: linear-gradient(140deg, #0EA5E9, #0369A1); }
+
+/* ---------- Главная/каталог: карточки как в макете ----------
+   Светлая карточка (одинаково на мобильном и десктопе), инициал в белом
+   круге слева вверху, тёмный текст названия и жанра. */
+.catalog .book-card .cover {
+  aspect-ratio: 3 / 4;
+  display: flex; flex-direction: column; justify-content: center; align-items: center;
+  padding: 0.5rem; border-radius: 0.6rem;
+  background: linear-gradient(160deg, #fbf8f0, #efe9d8); color: #1e293b;
+  box-shadow: inset 0 0 0 1px rgba(30, 41, 59, 0.05), 0 0.4rem 0.9rem rgba(22, 33, 62, 0.09);
+}
+.catalog .book-card .cover__initial {
+  position: absolute; top: 0.5rem; left: 0.55rem;
+  display: flex; align-items: center; justify-content: center;
+  width: 1.5rem; height: 1.5rem; border-radius: 50%;
+  background: #fff; color: #1e293b; font-size: 0.66rem; font-weight: 800;
+  box-shadow: 0 1px 3px rgba(22, 33, 62, 0.32); line-height: 1; opacity: 1;
+}
+.catalog .book-card .cover__title { color: #334155; font-size: 0.85rem; font-weight: 700; line-height: 1.2; text-align: center; }
+.catalog .book-card .cover__author { color: #64748b; font-size: 0.72rem; margin-top: 0.45rem; text-align: center; }
+
+/* ---------- Сетка каталога (2 колонки на мобильном) ---------- */
+.grid { display: flex; flex-wrap: wrap; gap: 0.9rem; }
+.grid > .book-card { flex: 1 1 calc(50% - 0.45rem); max-width: calc(50% - 0.45rem); }
+.grid__empty { color: var(--muted); margin-top: 1rem; }
+
+/* ---------- Карточка книги ---------- */
+.book { padding: 0 0 1.5rem; }
+#screen-book .card.book { background: none; box-shadow: none; border-radius: 0; padding: 0; margin-top: 1.1rem; }
+body.screen-book .topbar { display: none; }
+.book-card--top { display: flex; justify-content: center; padding: 1.25rem 0 1.25rem; filter: drop-shadow(0 0 1.2rem rgba(255, 255, 255, 0.9)); }
+.book-card--top .book-card { width: 12rem; }
+.book-card--top .cover {
+  background: linear-gradient(160deg, #fbf8f0, #efe9d8); color: #1e293b;
+  box-shadow: inset 0 0 0 1px rgba(30, 41, 59, 0.05), 0 0.4rem 0.9rem rgba(22, 33, 62, 0.09);
+}
+.book-card--top .cover__initial,
+.book-card--top .book-card__title,
+.book-card--top .book-card__author,
+.book-card--top .book-card__genre { display: none; }
+.book-card--top .cover__title { color: #334155; font-size: 0.95rem; }
+.book-card--top .cover__author { color: #64748b; }
+.book__aside { display: none; }
+.book__cover {
+  width: 100%; aspect-ratio: 5 / 7; border-radius: 0.8rem;
+  display: flex; flex-direction: column; justify-content: center; align-items: center;
+  padding: 1rem; text-align: center;
+  background: linear-gradient(160deg, #fbf8f0, #efe9d8); color: #1e293b;
+  box-shadow: inset 0 0 0 1px rgba(30, 41, 59, 0.05), 0 0.4rem 0.9rem rgba(22, 33, 62, 0.08);
+}
+.book__cover .cover__initial {
+  position: absolute; top: 1rem; left: 1.1rem;
+  display: flex; align-items: center; justify-content: center;
+  width: 3rem; height: 3rem; border-radius: 50%;
+  background: #fff; color: #1e293b; font-size: 1.25rem; font-weight: 800;
+  box-shadow: 0 1px 3px rgba(22, 33, 62, 0.32); line-height: 1;
+}
+.book__cover .cover__title { color: #334155; font-size: 1.5rem; font-weight: 700; line-height: 1.25; max-width: 100%; }
+.book__cover .cover__author { color: #64748b; font-size: 1.05rem; margin-top: 0.5rem; }
+.book__body { padding: 1.25rem 1.25rem 0; }
+.book__title { font-size: 1.45rem; font-weight: 800; line-height: 1.15; }
+.book__chip-row { display: flex; gap: 0.4rem; flex-wrap: wrap; min-width: 0; }
+.book__chip { font-size: 0.72rem; font-weight: 700; padding: 0.3rem 0.55rem; border-radius: 999px; background: #eef2ff; color: var(--primary); white-space: nowrap; }
+.book__author { color: var(--muted); margin-top: 0.15rem; }
+.book__meta { display: flex; align-items: center; gap: 0.5rem; flex-wrap: nowrap; margin: 0.9rem 0; }
+.book__rating { display: inline-flex; align-items: center; gap: 0.45rem; margin: 0; padding: 0.5rem 0.75rem; background: #FEF3C7; border-radius: 999px; }
+.book__rating .stars { color: var(--amber); font-size: 0.9rem; }
+.book__rating b { font-size: 1rem; color: var(--ink); line-height: 1; }
+.book__facts { display: flex; gap: 1rem; padding: 0.85rem 1rem; margin-bottom: 1rem; background: var(--card); border-radius: 0.9rem; box-shadow: var(--shadow); }
+.fact { flex: 1; text-align: center; }
+.fact b { display: block; font-size: 1.1rem; }
+.fact span { font-size: 0.75rem; color: var(--muted); }
+.book__about { margin-bottom: 1.1rem; }
+.book__about h3 { font-size: 1.05rem; margin-bottom: 0.4rem; }
+.book__about p { font-size: 0.95rem; color: #334155; }
+.book__more { color: var(--primary); font-weight: 700; }
+.book__progress { background: #f1f5f9; border-radius: 0.9rem; padding: 1rem 1.25rem; }
+.book__progress-head { display: flex; justify-content: space-between; font-weight: 800; margin-bottom: 0.4rem; }
+.book__progress-head .pct { color: var(--teal); }
+.book__progress-meta { font-size: 0.8rem; color: var(--muted); margin-top: 0.5rem; }
+.book__progress-meta .pm-d { display: none; }
+.book__actions { display: flex; flex-direction: column; gap: 0.6rem; padding: 1.25rem; }
+.book__actions .btn { padding: 0.95rem 1rem; font-size: 1rem; }
+.book__actions .btn .b-d { display: none; }
+.btn--fav { display: none; border: 1px solid var(--amber); color: #B45309; background: #fff7ed; }
+.btn--fav.is-fav { background: var(--amber); color: #fff; border-color: var(--amber); }
+
+/* Похожие книги */
+.similar { margin-top: 1.75rem; padding: 0 1.25rem; }
+.similar .track > .book-card .cover {
+  aspect-ratio: 3 / 4; border-radius: 0.6rem;
+  display: flex; flex-direction: column; justify-content: center; align-items: center;
+  padding: 0.5rem;
+  background: linear-gradient(160deg, #fbf8f0, #efe9d8); color: #1e293b;
+  box-shadow: inset 0 0 0 1px rgba(30, 41, 59, 0.05), 0 0.4rem 0.9rem rgba(22, 33, 62, 0.09);
+}
+.similar .track > .book-card .cover__initial {
+  position: absolute; top: 0.5rem; left: 0.55rem;
+  display: flex; align-items: center; justify-content: center;
+  width: 1.5rem; height: 1.5rem; border-radius: 50%;
+  background: #fff; color: #1e293b; font-size: 0.66rem; font-weight: 800;
+  box-shadow: 0 1px 3px rgba(22, 33, 62, 0.32); line-height: 1; opacity: 1;
+}
+.similar .track > .book-card .cover__title { color: #334155; font-size: 0.85rem; font-weight: 700; line-height: 1.2; text-align: center; }
+.similar .track > .book-card .cover__author { color: #64748b; font-size: 0.72rem; margin-top: 0.45rem; text-align: center; }
+.book__crumbs { display: none; }
+
+/* ---------- Профиль ---------- */
+.page__title { font-size: 1.3rem; font-weight: 800; margin: 1.25rem 0 1.5rem; }
+.profile__card { text-align: center; padding: 1.5rem 0 1rem; }
+.profile__name { font-size: 1.3rem; font-weight: 800; }
+.profile__email { color: var(--muted); font-size: 0.9rem; }
+.profile__tag {
+  display: inline-block; margin-top: 0.55rem;
+  background: var(--amber); color: #fff; font-size: 0.78rem; font-weight: 700;
+  padding: 0.4rem 1rem; border-radius: 999px;
+}
+.stats { display: flex; gap: 0.6rem; margin: 0.5rem 0 1.25rem; }
+.stat {
+  flex: 1; background: var(--card); border-radius: 1rem;
+  padding: 0.6rem 0.25rem 0.5rem; text-align: center; box-shadow: var(--shadow);
+}
+.stat b { display: block; font-size: 1.05rem; color: var(--ink); min-height: 1.35rem; }
+.stat span { font-size: 0.68rem; color: var(--muted); }
+.stat__icon { width: 1.05rem; height: 1.05rem; margin: 0 auto 0.25rem; fill: none; stroke: var(--primary); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.stats .stat:nth-child(n+2) .stat__icon { stroke: #b9c3d4; }
+.sbar { display: block; height: 0.4rem; margin: 0.35rem 0.35rem 0; border-radius: 999px; background: var(--line); overflow: hidden; }
+.sbar u { display: block; height: 100%; border-radius: 999px; background: var(--primary); }
+.stats--row .stat:nth-child(n+2) .sbar u { background: #e3e8f2; }
+.now { display: flex; gap: 0.9rem; align-items: center; padding: 0.85rem; margin-bottom: 1.25rem; background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); }
+.now__body { flex: 1; min-width: 0; }
+.now__title { font-weight: 800; }
+.now__pct { color: var(--teal); font-weight: 800; font-size: 0.9rem; }
+.now__meta { font-size: 0.8rem; color: var(--muted); }
+.menu { background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; }
+.menu__row {
+  display: flex; align-items: center; gap: 0.9rem;
+  padding: 1.15rem 1.1rem; border-bottom: 1px solid #f1f5f9; cursor: pointer;
+}
+.menu__row > div { min-width: 0; display: flex; flex-direction: column; gap: 0.1rem; }
+.sticker { width: 3rem; height: 3rem; flex: none; border-radius: 0.7rem; background: #edf2ff; display: flex; align-items: center; justify-content: center; }
+.sticker .icon { width: 1.6rem; height: 1.6rem; stroke: #1d4ed8; fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.menu__row:last-child { border-bottom: 0; }
+.menu__row b { display: block; }
+.menu__row span { font-size: 0.8rem; color: var(--muted); }
+.menu__row i { font-style: normal; color: #cbd5e1; font-size: 1.2rem; margin-left: auto; }
+.menu__row--logout { cursor: pointer; }
+
+/* ---------- Профиль (desktop) ---------- */
+.profile__desk { display: none; }
+.card.phead { display: flex; align-items: center; gap: 1rem; padding: 1.25rem 1.5rem; margin-bottom: 1.25rem; }
+.phead .avatar { margin: 0; width: 5rem; height: 5rem; font-size: 1.9rem; }
+.phead__info { flex: 1; }
+.phead .profile__name { text-align: left; font-size: 1.35rem; }
+.pub-line { font-size: 0.85rem; color: var(--muted); }
+.btn--outline { width: auto; border: 1px solid var(--primary); color: var(--primary); padding: 0.6rem 1.1rem; font-size: 0.9rem; }
+.stats--row { margin-bottom: 1.5rem; }
+.pcols { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-bottom: 1.25rem; }
+.now--desk { display: flex; flex-direction: column; align-items: stretch; gap: 1.5rem; background: var(--card); padding: 1.5rem 1.5rem 1.25rem; border-radius: var(--radius); box-shadow: var(--shadow); margin-bottom: 0; align-self: start; }
+.now--desk .now__sect { margin: 0; }
+.now__row { display: flex; align-items: center; gap: 1.5rem; }
+.now--desk .now--book { width: 7.2rem; flex: 0 0 auto; }
+.now--desk .now--book .book-card { min-width: 0; width: 100%; }
+.now--desk .now--book .book-card__title, .now--desk .now--book .book-card__meta { display: none; }
+.now--desk .now__body { flex: 1; }
+.now__sub { font-size: 0.9rem; color: var(--muted); margin-bottom: 0.5rem; }
+.now--desk .now__btn { margin-top: 0; margin-left: auto; align-self: center; width: auto; flex: 0 0 auto; padding: 0.55rem 1rem; font-size: 0.85rem; }
+.card.pbk { padding: 1.5rem 1.5rem 1.25rem; margin-bottom: 0; }
+.card.goal { padding: 1.1rem 1.5rem; font-size: 1.05rem; color: #334155; }
+.card.goal b { color: var(--teal); }
+
+/* ---------- Нижняя навигация (mobile) ---------- */
+.tabbar {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 30;
+  display: flex; justify-content: space-around; align-items: flex-start;
+  background: var(--card);
+  padding: 0.5rem 0 0.35rem; padding-bottom: calc(0.35rem + env(safe-area-inset-bottom));
+  box-shadow: 0 -1px 10px rgba(22, 33, 62, 0.07);
+}
+.tab { flex: 1; text-align: center; color: var(--muted); font-size: 0.68rem; }
+.tab .icon { font-size: 1.25rem; margin-bottom: 0.15rem; }
+.tab span { display: block; }
+.tab--active { color: var(--primary); font-weight: 700; }
+
+/* ---------- Десктопная боковая панель (скрыта) ---------- */
+.sidebar { display: none; }
+
+/* ============================================================
+   ДЕСКТОПНЫЙ БЛОК (Media Queries, breakpoint 768px)
+   ============================================================ */
+@media (min-width: 768px) {
+  body { font-size: 1.0625rem; }
+
+  /* верхняя панель: поиск по центру контентной области + имя/аватар */
+  .topbar {
+    display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+    margin-left: 16.6rem; margin-right: 3.5rem; padding: 2.1rem 0 0.5rem;
+  }
+  .topbar .brand { display: none; }
+  .topbar__search {
+    display: flex; flex: 1; min-width: 0;
+    align-items: center; gap: 0.55rem;
+    background: var(--card); border-radius: 999px; padding: 0.15rem 1.15rem;
+    box-shadow: var(--shadow); color: var(--muted);
+  }
+  .topbar__search .icon { width: 1.05rem; height: 1.05rem; opacity: 0.75; }
+  .topbar__search input { flex: 1; min-width: 0; border: 0; background: none; padding: 0.5rem 0; font-size: 0.85rem; }
+  .topbar__search input:focus { outline: 0; }
+  .topbar__name { display: block; font-size: 0.85rem; font-weight: 600; order: 2; }
+  .topbar__right { gap: 0.6rem; }
+  .topbar__right { display: none; }
+  .topbar__right .avatar--sm { width: 2.3rem; height: 2.3rem; font-size: 0.9rem; }
+  .topbar__title { display: none !important; }
+  body.screen-book .topbar__search { display: none; }
+  main { padding: 0.5rem 3.5rem 3rem 16.6rem; }
+  .searchbar { display: none; }
+  .greeting { display: none; }
+  .tabbar { display: none; }
+
+  .sidebar {
+    display: flex; flex-direction: column; justify-content: flex-start;
+    position: fixed; inset: 0 auto 0 0; width: 14.3rem;
+    background: #FBF7EC; color: var(--ink); padding: 1.5rem 0 2.2rem 1.15rem;
+    box-shadow: inset -1px 0 0 rgba(22, 33, 62, 0.06);
+  }
+  .sidebar__brand { color: var(--ink); }
+  .sidebar .brand__logo { width: 2.1rem; height: 2.1rem; border-radius: 0.6rem; }
+  .sidebar .brand__name { font-size: 1.05rem; }
+  .sidebar__list { display: flex; flex-direction: column; gap: 0.1rem; margin-top: 1.5rem; font-size: 0.85rem; }
+  .side { display: flex; align-items: center; gap: 0.6rem; padding: 0.55rem 1rem; margin-right: 1.25rem; border-radius: 0.75rem; color: #475569; }
+  .side__icon { width: 1.05rem; height: 1.05rem; flex: 0 0 auto; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+  .side--active, .side:hover { background: var(--primary); color: #fff; }
+  .sidebar__widget {
+    margin-top: 30rem; margin-right: 1.35rem; margin-bottom: 0;
+    background: linear-gradient(135deg, var(--primary), var(--primary-strong));
+    color: #fff; border-radius: 0.9rem; padding: 0.8rem 1.05rem;
+  }
+  .sidebar__widget b { font-size: 0.78rem; opacity: 0.9; }
+  .sidebar__book { font-weight: 800; margin-top: 0.25rem; font-size: 0.9rem; }
+  .sidebar__pct { font-size: 0.72rem; opacity: 0.9; }
+  .sidebar__widget .progress { background: rgba(255, 255, 255, 0.3); }
+  .sidebar__widget .progress__fill { background: #fff; }
+
+  /* рекомендуем — шесть колонок, десктопные карточки видимы */
+  .book-card { width: 7.85rem; }
+  .book-card--ext { display: flex; }
+  .cover { border-radius: 0.6rem; }
+  .cover__initial { font-size: 2.2rem; top: 0.45rem; left: 0.55rem; }
+  .cover__title { font-size: 0.8rem; }
+  .cover__author { font-size: 0.66rem; }
+  .book-card__title { font-size: 0.8rem; margin-top: 0.5rem; }
+  .book-card__author { font-size: 0.7rem; }
+  .grid { gap: 1.5rem; }
+  .grid > .book-card { flex: 1 1 calc(16.666% - 1.25rem); max-width: calc(16.666% - 1.25rem); }
+
+  /* авторизация: без сайдбара и шапки — центр, как в макете image2 */
+  body.screen-auth .sidebar { display: none; }
+  body.screen-auth main { padding: 0 2.5rem 0 0; }
+  .auth { display: flex; align-items: stretch; min-height: 100vh; }
+  .auth__hero {
+    flex: 0 0 46%; text-align: left; position: relative;
+    background: linear-gradient(135deg, #2563EB, #2e7bc6); color: #fff;
+    padding: 4rem 2.5rem; margin-right: 1.5rem;
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  .auth__top { text-align: left; padding-top: 0; width: 100%; }
+  .auth__book { display: none; }
+  .auth__brand { justify-content: flex-start; }
+  .auth__wordmark { color: #fff; font-size: 2.1rem; }
+  .pro-badge { display: none; }
+  .auth__band { background: transparent; padding: 0; margin: 0; }
+  .auth__mob { display: none; }
+  .auth__slogan { color: #fff; max-width: 24rem; margin-left: 0; text-align: left; font-size: 2rem; }
+  .slogan-m { display: none; }
+  .slogan-d { display: block; }
+  .auth__sub { display: block; color: rgba(255, 255, 255, 0.9); max-width: 26rem; margin: 1.25rem 0 0; font-size: 1.05rem; line-height: 1.55; }
+  .auth__stats { display: flex; gap: 2.25rem; margin-top: 3rem; }
+  .auth__stat-big b { display: block; font-size: 1.5rem; line-height: 1.1; }
+  .auth__stat-big span { font-size: 0.85rem; opacity: 0.85; }
+  .auth__card { flex: 1; align-self: center; padding: 3.25rem 3rem; max-width: 31rem; margin: 0 auto; }
+  .auth__card-title.auth__title-m { display: none; }
+  .auth__head-d { display: block; }
+  .auth__welcome { font-size: 1.9rem; font-weight: 800; color: var(--ink); }
+  .auth__subtitle { color: var(--muted); font-size: 0.95rem; margin: 0.35rem 0 1.5rem; }
+  .auth__tabs { display: flex; background: var(--cream); border-radius: 999px; padding: 0.25rem; margin-bottom: 1.8rem; }
+  .auth__tab { flex: 1; text-align: center; padding: 0.6rem; border-radius: 999px; font-weight: 700; color: #8a94a6; }
+  .auth__tab--active { background: #fff; color: #1d4ed8; box-shadow: 0 2px 6px rgba(22, 33, 62, 0.08); }
+  .auth__card .form__label { font-size: 0.85rem; margin-top: 1.5rem; }
+  .auth__card .form__input { font-size: 1.05rem; padding: 0.7rem 1.05rem; }
+  .auth__card .form__forgot { font-size: 0.88rem; margin: 0.9rem 0 1.1rem; }
+  .auth__card .divider { margin: 1.3rem 0 1.2rem; }
+  .auth__card .btn { margin-top: 0.3rem; }
+  .auth__legal { display: block; text-align: center; white-space: nowrap; font-size: 0.78rem; color: #94a3b8; margin-top: 1.4rem; }
+
+  .banner {
+    max-width: none; margin: 0.4rem 0 0; padding: 0.9rem 2.2rem 1.1rem;
+    border-radius: 1.1rem;
+    background: linear-gradient(115deg, #1E4FAE, #2461E4 55%, #1F63CD);
+    box-shadow: 0 0.5rem 1.4rem rgba(31, 79, 174, 0.32);
+    align-items: center;
+  }
+  .banner__tag { font-size: 0.7rem; font-weight: 700; opacity: 0.9; }
+  .banner__big { font-size: 1.5rem; margin-top: 0.35rem; }
+  .banner__big .bb-m { display: none; }
+  .banner__big .bb-d { display: block; }
+  .banner__sub { display: none; }
+  .banner__note { font-size: 0.85rem; line-height: 1.25; margin-top: 0.5rem; }
+  .banner__note .bn-m { display: none; }
+  .banner__note .bn-d { display: block; }
+  .banner__cta {
+    display: inline-flex; align-items: center; gap: 0.45rem;
+    margin-top: 0; margin-left: auto; flex: 0 0 auto;
+    font-size: 0.85rem; padding: 0.55rem 1.1rem;
+    background: rgba(255, 255, 255, 0.2);
+  }
+  .banner__cta .banner__arrow { width: 1rem; height: 1rem; margin: 0; }
+
+  /* каталог: чипы в одну строку, лента шести книг */
+  .chips { gap: 0.6rem; padding: 0.6rem 0 1.3rem; }
+  .chip { padding: 0.5rem 0.85rem; font-size: 0.78rem; box-shadow: none; }
+  .chip--active { background: #1d4ed8; color: #fff; }
+  .chip:not(.chip--active) { background: #fdf6e7; color: var(--ink); }
+  .catalog { max-width: none; }
+  .track { flex-wrap: wrap; overflow: visible; gap: 1.45rem; }
+  .grid__empty, .reading { max-width: none; }
+  .reading__meta.rm-m { display: none; }
+  .reading__meta.rm-d { display: block; }
+  .book-card__genre { display: none; }
+  .sect { margin: 2.35rem 0 1.35rem; }
+  .sect__title { font-size: 1rem; }
+  .sect__more { font-size: 0.78rem; color: #5570b8; }
+  .reading { padding: 1rem 1.35rem; gap: 1.15rem; margin-top: 1.05rem; margin-bottom: 0.4rem; align-items: stretch; }
+  .reading .cover { width: 4.6rem; margin: 0 0 0.2rem; align-self: flex-start; }
+  .reading__head { font-size: 0.8rem; }
+  .reading__title { font-size: 0.95rem; margin-top: 0.4rem; }
+  .reading__meta.rm-d { font-size: 0.72rem; line-height: 1.4; }
+  .reading__time { margin-top: 1.4rem; }
+  .reading .progress { max-width: 26rem; }
+
+  /* порядок разделов главной, как в макете: баннер → Рекомендуем → Новые поступления → Продолжайте читать */
+  .catalog { display: flex; flex-direction: column; }
+  .catalog > .chips { order: 0; }
+  .catalog > .banner { order: 1; }
+  .catalog > .sect--rec { order: 2; }
+  .catalog > #recommended { order: 2; }
+  .catalog > .sect--np { order: 3; margin: 0; }
+  .catalog > .sect--np .sect__title,
+  .catalog > .sect--np .sect__more { display: none; }
+  .catalog > #catalogGrid, .catalog > #emptyState { order: 3; margin-top: 0.6rem; }
+  .catalog > .reading { order: 4; }
+
+  /* карточка книги: две колонки */
+  .book__crumbs { display: flex; align-items: baseline; gap: 0.35rem; margin-bottom: 1rem; color: var(--muted); font-size: 0.9rem; }
+  .book__crumbs a { color: var(--primary); font-weight: 600; }
+  .book__crumbs .crumb-here { color: var(--ink); }
+  .book__view { display: flex; flex-wrap: wrap; gap: 1.25rem; align-items: flex-start; }
+  .book__aside { display: block; width: 38%; flex: 0 0 38%; }
+  .book-card--top { display: none; }
+  .book__cover {
+    width: 100%; aspect-ratio: 5 / 7;
+    border-radius: 1rem; position: sticky; top: 2rem;
+  }
+  .book__body { flex: 1 1 55%; min-width: 0; }
+  .book__progress-meta .pm-m { display: none; }
+  .book__progress-meta .pm-d { display: inline; }
+  .book__actions { width: 38%; flex: 0 0 38%; flex-direction: column; }
+  .book__actions .btn { flex: 1; }
+  .book__actions .btn .b-m { display: none; }
+  .book__actions .btn .b-d { display: block; }
+  .book__actions .btn--fav { display: block; }
+  .similar { max-width: 56rem; }
+
+  /* профиль: десктопный макет вместо мобильного */
+  .profile__mobile { display: none; }
+  .profile__desk { display: block; }
+  body.screen-profile .topbar { display: flex; }
+  body.screen-profile .topbar__search { display: none; }
+}
+
+/* ---------- Широкие экраны ---------- */
+@media (min-width: 1200px) {
+  body { font-size: 1.125rem; }
+  main { padding-left: 16.6rem; padding-right: 3.5rem; }
+  .topbar { margin-left: 16.6rem; margin-right: 3.5rem; }
+  .sidebar { width: 14.3rem; }
+  .catalog, .similar { max-width: none; }
+  .grid { gap: 1.5rem; }
+  .grid > .book-card { flex: 1 1 calc(16.666% - 1.25rem); max-width: calc(16.666% - 1.25rem); }
+  .catalog .grid { gap: 1.45rem; }
+  .catalog .grid > .book-card { flex: 0 0 auto; width: 8.4rem; max-width: 8.4rem; }
+  .track > .book-card { width: 8.4rem; }
+  .cover__initial { font-size: 2.2rem; }
+  .book__cover { flex-basis: 34%; }
+
+  /* как в макете: в сетке «Новые поступления» только текст, обложка скрыта */
+  #catalogGrid > .book-card .cover { display: none; }
+  #catalogGrid > .book-card .book-card__title { margin-top: 0; min-width: 0; font-size: 0.8rem; line-height: 1.2; }
+  #catalogGrid > .book-card .book-card__meta { margin-top: 0.12rem; font-size: 0.7rem; }
+
+  /* карточка «Продолжайте читать» — обложка тоже светлая, как в макете */
+  .reading .cover {
+    background: linear-gradient(160deg, #fbf8f0, #efe9d8);
+    box-shadow: inset 0 0 0 1px rgba(30, 41, 59, 0.05), 0 0.4rem 0.9rem rgba(22, 33, 62, 0.08);
+    color: #1e293b;
+  }
+  .reading .cover .cover__title, .reading .cover .cover__author { color: #25304a; }
+
+  /* как в макете: закладки в профиле — карточки по 3 в строку */
+  .pbk .sect { margin: 0; }
+  .pbk .track { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.25rem; margin-top: 1.5rem; }
+  .pbk .track .book-card { width: auto; max-width: none; display: block; }
+  .pbk .track > .book-card { width: 7.6rem; justify-self: center; }
+  .pbk .track .book-card .cover { width: 100%; flex: none; aspect-ratio: 5 / 7; }
+  .pbk .track > .book-card .book-card__meta { margin-top: 0.4rem; }
+
+  /* «Читаю сейчас» в профиле: карточка книги в стиле закладок, того же размера */
+  .now--desk .now--book .cover { width: 100%; flex: none; aspect-ratio: 5 / 7; }
+
+  /* как в макете: в ленте подписи внутри обложки, в сетке — под обложкой */
+  .track > .book-card .book-card__title,
+  .track > .book-card .book-card__author,
+  .track > .book-card .book-card__genre { display: none; }
+  #catalogGrid > .book-card .book-card__meta .meta-r { display: none; }
+
+  /* ---------- Детализация книги: макет (десктоп) ---------- */
+  body.screen-book .topbar { display: none; }
+  #screen-book .card.book { background: none; box-shadow: none; border-radius: 0; padding: 0; display: grid; align-items: start; grid-template-columns: 15.5rem minmax(0, 1fr); column-gap: 1.1rem; row-gap: 0; margin-top: 2.6rem;
+    grid-template-areas:
+      "cover body"
+      "act   body"
+      ".     sim";
+  }
+  .book__view { display: contents; }
+  .book__aside { grid-area: cover; width: 100%; }
+  .book__cover { width: 100%; flex: none; aspect-ratio: 5 / 7; border-radius: 0.7rem; position: relative; top: 0; }
+  .book__cover .cover__initial { top: 1.1rem; left: 1.1rem; width: 3.2rem; height: 3.2rem; font-size: 1.4rem; }
+
+  .book__actions { grid-area: act; width: 100%; flex-direction: column; gap: 0.7rem; padding: 0.75rem 0 0; }
+  .book__actions .btn { flex: none; padding: 0.95rem 1rem; font-size: 1rem; }
+  .book__actions .btn--fav { background: #fff; border: 1px solid #d4d4d8; color: var(--ink); }
+  .book__actions .btn--fav.is-fav { background: var(--amber); border-color: var(--amber); color: #fff; }
+
+  .book__body { grid-area: body; align-self: stretch; min-width: 0; background: var(--card); border-radius: 1rem; box-shadow: var(--shadow); padding: 1.15rem 1.7rem 1.5rem; margin-bottom: 1.1rem; }
+  .book__crumbs { font-size: 0.82rem; margin-bottom: 0.6rem; }
+  .book__title { margin: 0 0 0.3rem; font-size: 1.8rem; }
+  .book__author { font-size: 1.25rem; margin-top: 0.2rem; }
+  .book__meta { display: flex; align-items: center; gap: 0.7rem; margin: 1.1rem 0; flex-wrap: wrap; }
+  .book__rating { margin: 0; padding: 0.5rem 0.9rem; background: #FEF3C7; border-radius: 999px; }
+  .book__rating .stars { color: var(--amber); font-size: 1.05rem; letter-spacing: 0.06em; }
+  .book__rating b { font-size: 1.05rem; color: var(--ink); }
+  .book__chip-row { margin: 0; }
+  .book__chip { padding: 0.45rem 0.95rem; font-size: 0.8rem; }
+  .book__chip-row .book__chip:nth-child(2) { background: #f1eee6; color: #475569; }
+  .book__facts { border: 0; background: none; border-radius: 0; box-shadow: none; gap: 1.5rem; padding: 0.4rem 0 0.9rem; margin: 0 0 1.1rem; }
+  .fact b { font-size: 1.15rem; color: var(--ink); }
+  .fact { text-align: left; flex: 0 0 auto; }
+  .book__about h3 { display: none; }
+  .book__about p { font-size: 0.98rem; line-height: 1.55; }
+  .book__progress { background: #FBF7EC; padding: 1.15rem 1.35rem; margin-top: 1.25rem; }
+  .book__progress-head { font-size: 1rem; }
+  .book__progress-head .pct { color: var(--primary); }
+  .book__progress-meta { font-size: 0.82rem; margin-top: 0.55rem; }
+
+  .similar { grid-area: sim; width: 100%; max-width: none; margin-top: 0; background: var(--card); border-radius: 1rem; box-shadow: var(--shadow); padding: 1.1rem 1.35rem 1.4rem; }
+  .similar > .sect { margin: 0 0 1rem; }
+  .similar .sect__more { display: none; }
+  .similar .track { overflow: visible; gap: 1.1rem; }
+  .similar .track > .book-card { width: 7.5rem; max-width: 7.5rem; }
+  .similar .track > .book-card .book-card__title { font-size: 0.72rem; margin-top: 0.45rem; }
+}
